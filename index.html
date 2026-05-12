@@ -6,16 +6,16 @@
     <title>اليوم العالمي للضمير</title>
     <!-- استدعاء خط عربي -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
-    <!-- استدعاء مكتبة الأيقونات -->
+    <!-- استدعاء مكتبة الأيقونات (FontAwesome v6) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
             --header-bg: #f8dfa8; /* الشريط الأصفر */
-            --main-bg: #ea5c52; /* الخلفية الحمراء */
-            --text-dark: #633615;
-            --text-light: #ffffff;
-            --highlight: #f9d774;
+            --main-text-color: #633615; /* لون النص البني الغامق */
+            --highlight: #f9d774; /* لون التمييز الأصفر الفاتح */
+            --text-on-red: #ffffff; /* لون النص الأبيض فوق الأحمر */
+            --warm-bg-tint: rgba(252, 243, 223, 0.7); /* لون قسم "من نحن" شبه الشفاف */
         }
 
         /* تفعيل النزول السلس عند الضغط على الروابط */
@@ -27,13 +27,32 @@
             margin: 0;
             padding: 0;
             font-family: 'Tajawal', sans-serif;
-            background-color: var(--main-bg);
+            background-color: transparent; /* الجسم شفاف لضمان ظهور الخلفية */
             overflow-x: hidden;
+            position: relative; /* مهم لموقع الخلفية الثابتة */
         }
 
         /* 
-         هنا التعديل المهم: جعل الشريط لا يختفي عند النزول
+         الخطوة الأولى: تنسيق الخلفية الثابتة والكاملة
         */
+        #background-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -100; /* خلف كل النصوص */
+            background-image: url('WhatsApp_Image_2026-05-12_at_9.39.51_PM.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* الشفافية الأولية 1 (غير شفاف) */
+            opacity: 1; 
+            will-change: opacity; /* تحسين أداء الحركة */
+        }
+
+        /* الشريط الأصفر الثابت */
         header {
             background-color: var(--header-bg);
             display: flex;
@@ -41,7 +60,6 @@
             align-items: center;
             padding: 10px 40px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            /* خصائص التثبيت */
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -56,7 +74,7 @@
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            color: var(--main-bg);
+            color: #ea5c52;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             font-size: 0.8rem;
             text-align: center;
@@ -73,36 +91,44 @@
 
         nav a {
             text-decoration: none;
-            color: var(--text-dark);
+            color: var(--main-text-color);
             font-weight: 800;
             font-size: 1.2rem;
             transition: color 0.3s ease;
         }
 
         nav a:hover {
-            color: var(--main-bg);
+            color: #ea5c52;
         }
 
         .slogan {
-            color: var(--text-dark);
+            color: var(--main-text-color);
             font-weight: 800;
             font-size: 1.1rem;
         }
 
-        /* القسم الرئيسي (الصورة والنص الأول) */
+        /* 
+         تعديل القسم الرئيسي: إزالة الصورة القديمة ليصبح النص فوق الخلفية الجديدة
+        */
         .hero {
             display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: calc(100vh - 90px);
-            position: relative;
+            text-align: center;
+            
+            /* إزالة الصورة القديمة */
+            background-image: none; 
+            
+            /* لون خلفية شفاف لضمان وضوح النص الأبيض فوق الخلفيةBusy */
+            background-color: rgba(234, 92, 82, 0.2); 
+            
+            color: var(--text-on-red);
         }
 
         .hero-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            max-width: 900px;
             padding: 40px 60px;
-            color: var(--text-light);
             z-index: 2;
         }
 
@@ -122,36 +148,26 @@
             color: var(--highlight);
         }
 
-        .hero-image-container {
-            flex: 1.2;
-            position: relative;
-            border-top-right-radius: 300px;
-            border-bottom-right-radius: 100px;
-            overflow: hidden;
-            box-shadow: -10px 0 20px rgba(0,0,0,0.2);
-        }
-
-        .hero-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* تنسيق الأقسام الجديدة (النص الإضافي ومن نحن) */
-        .content-section {
-            background-color: #ffffff;
+        /* 
+         تنسيق أقسام النص لتصبح شفافة فوق الخلفية
+        */
+        .content-section, .about-us-section, .contact-section {
             padding: 80px 40px;
             text-align: center;
+            
+            /* خلفية شبه شفافة جداً لضمان وضوح النص البني فوق الخلفيةBusy */
+            background-color: rgba(255, 255, 255, 0.4); 
+            
+            backdrop-filter: blur(2px); /* تأثير ضبابي خفيف خلف النص للمسة احترافية */
         }
 
+        /* تخصيص قسم "من نحن" بلون أهدى */
         .about-us-section {
-            background-color: #fcf3df; /* لون قريب من الشريط الأصفر بس أهدى شوي */
-            padding: 80px 40px;
-            text-align: center;
+            background-color: var(--warm-bg-tint);
         }
 
         .section-title {
-            color: var(--main-bg);
+            color: #ea5c52;
             font-size: 2.8rem;
             margin-top: 0;
             margin-bottom: 30px;
@@ -159,15 +175,95 @@
         }
 
         .section-text {
-            color: var(--text-dark);
+            color: var(--main-text-color);
             font-size: 1.4rem;
             line-height: 1.9;
             max-width: 900px;
             margin: 0 auto;
         }
 
+        /* تنسيق قسم تواصل معنا */
+        .contact-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 40px auto 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-details, .contact-form-design {
+            flex: 1;
+            min-width: 300px;
+            text-align: right;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: var(--main-text-color);
+        }
+
+        .contact-item i {
+            color: #ea5c52;
+            font-size: 1.5rem;
+        }
+
+        .contact-form-design h4 {
+            color: #ea5c52;
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--main-text-color);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            color: var(--main-text-color);
+            box-sizing: border-box; 
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #ea5c52;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #d1463e;
+        }
+
+        /* أيقونات التواصل الاجتماعي الثابتة */
         .social-icons {
-            position: fixed; /* ثابتة عالشاشة دايما */
+            position: fixed; 
             bottom: 30px;
             right: 30px;
             display: flex;
@@ -178,7 +274,7 @@
 
         .social-icons i {
             background-color: white;
-            color: var(--main-bg);
+            color: #ea5c52;
             width: 45px;
             height: 45px;
             border-radius: 50%;
@@ -196,47 +292,50 @@
         }
 
         @media (max-width: 900px) {
-            .hero { flex-direction: column; height: auto; }
-            .hero-image-container { border-radius: 0; height: 400px; order: -1; }
-            header { flex-direction: column; gap: 15px; text-align: center; position: static; /* فك التثبيت عالموبايل عشان ما ياخذ مساحة الشاشة */ }
+            header { flex-direction: column; gap: 15px; text-align: center; position: static; /* فك التثبيت عالموبايل */ }
             nav ul { flex-direction: column; gap: 15px; }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-text h2 { font-size: 2.5rem; }
             .section-title { font-size: 2.2rem; }
             .section-text { font-size: 1.1rem; }
+            .contact-container { flex-direction: column; gap: 30px; }
+            .contact-details, .contact-form-design { text-align: center; }
+            .contact-item { justify-content: center; }
+            .submit-btn { width: 100%; }
         }
     </style>
 </head>
 <body>
 
+    <!-- 
+     الخطوة الثانية: عنصر الخلفية الثابتة والكاملة
+    -->
+    <div id="background-fixed"></div>
+
     <!-- الشريط العلوي الثابت -->
     <header>
-        <!-- مكان الشعار (تقدر تحط صورة الشعار اللي جهزناه هون) -->
         <div class="logo">الشعار</div>
         <nav>
             <ul>
                 <li><a href="#home">الصفحة الرئيسية</a></li>
-                <!-- الرابط هذا بينزلك مباشرة لقسم من نحن -->
                 <li><a href="#about">من نحن</a></li>
-                <li><a href="#">تواصل معنا</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
             </ul>
         </nav>
         <div class="slogan">- أنت أمل العالم -</div>
     </header>
 
-    <!-- القسم الأساسي (اللي فيه الصورة) -->
+    <!-- 
+     الخطوة الثالثة: القسم الرئيسي (بدون صورة قديمة ليطفو النص فوق الخلفية)
+    -->
     <main class="hero" id="home">
         <div class="hero-text">
             <h1>اليوم العالمي للضمير</h1>
             <h2>مساهمة بسيطة<br>تصنع<br>فرقا في حياة <span class="highlight">شخص</span></h2>
         </div>
-        
-        <div class="WhatsApp_Image_2026-05-12_at_9.39.51_PM.jpeg">
-            <img src="WhatsApp_Image_2026-05-12_at_9.39.51_PM.jpeg" alt="أشخاص يوزعون الطعام">
-        </div>
     </main>
 
-    <!-- أي نص إضافي تحت الصورة -->
+    <!-- قسما رسالتنا ومن نحن (شفافة فوق الخلفية) -->
     <section class="content-section">
         <h3 class="section-title">رسالتنا</h3>
         <p class="section-text">
@@ -244,7 +343,6 @@
         </p>
     </section>
 
-    <!-- قسم "من نحن" -->
     <section class="about-us-section" id="about">
         <h3 class="section-title">من نحن</h3>
         <p class="section-text">
@@ -252,11 +350,77 @@
         </p>
     </section>
 
-    <!-- أيقونات التواصل الاجتماعي -->
+    <!-- قسم "تواصل معنا" (شفافة فوق الخلفية) -->
+    <section class="contact-section" id="contact">
+        <h3 class="section-title">تواصل معنا</h3>
+        <p class="section-text">
+            نحن هنا للإجابة على استفساراتكم، وملاحظاتكم، أو أي مقترحات لديكم. لا تترددوا في الاتصال بنا عبر الوسائل التالية:
+        </p>
+        
+        <div class="contact-container">
+            <!-- تفاصيل الاتصال -->
+            <div class="contact-details">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@conscienceday.org</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+962 7XXXXXXXX</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>عمان، الأردن</span>
+                </div>
+            </div>
+
+            <!-- نموذج رسالة -->
+            <div class="contact-form-design">
+                <h4>أو أرسل لنا رسالة</h4>
+                <div class="form-group">
+                    <label for="name">الاسم:</label>
+                    <input type="text" id="name" placeholder="أدخل اسمك هنا">
+                </div>
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني:</label>
+                    <input type="email" id="email" placeholder="أدخل بريدك الإلكتروني هنا">
+                </div>
+                <div class="form-group">
+                    <label for="message">الرسالة:</label>
+                    <textarea id="message" rows="5" placeholder="أدخل رسالتك هنا"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">إرسال (نموذج تصميم)</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- أيقونات التواصل الاجتماعي الثابتة -->
     <div class="social-icons">
         <i class="fas fa-phone"></i>
         <i class="fab fa-facebook-f"></i>
     </div>
+
+    <!-- 
+     الخطوة الرابعة والسر الساحر: JavaScript لتخفية الخلفية عند النزول
+    -->
+    <script>
+        // الحصول على عنصر الخلفية
+        const background = document.getElementById('background-fixed');
+        
+        // ربط دالة النزول بالنوافذ
+        window.onscroll = function() {
+            // حساب نسبة النزول (0 إلى 1) بناءً على ارتفاع الصفحة بالكامل
+            const totalPageHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercentage = window.scrollY / totalPageHeight;
+            
+            // حساب الشفافية الجديدة: 1 - نسبة النزول
+            // هذا يعني: عند القمة (1)، عند القاع (0)
+            const newOpacity = 1 - scrollPercentage;
+            
+            // تطبيق الشفافية الجديدة، مع تحديد حد أدنى (0.3) لضمان ظهور الخلفية
+            background.style.opacity = Math.max(0.3, newOpacity); 
+        };
+    </script>
 
 </body>
 </html>
