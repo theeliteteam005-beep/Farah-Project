@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اليوم العالمي للضمير</title>
+    <!-- استدعاء خط عربي -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- استدعاء مكتبة الأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --header-bg: #f8dfa8; /* لون القائمة العلوية */
-            --main-bg: #ea5c52; /* لون الخلفية الأحمر/البرتقالي */
+            --header-bg: #f8dfa8; /* الشريط الأصفر */
+            --main-bg: #ea5c52; /* الخلفية الحمراء */
             --text-dark: #633615;
             --text-light: #ffffff;
-            --highlight: #f9d774; /* لون كلمة "شخص" */
+            --highlight: #f9d774;
+        }
+
+        /* تفعيل النزول السلس عند الضغط على الروابط */
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -24,7 +31,9 @@
             overflow-x: hidden;
         }
 
-        /* تنسيق الشريط العلوي */
+        /* 
+         هنا التعديل المهم: جعل الشريط لا يختفي عند النزول
+        */
         header {
             background-color: var(--header-bg);
             display: flex;
@@ -32,8 +41,10 @@
             align-items: center;
             padding: 10px 40px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 10;
+            /* خصائص التثبيت */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
@@ -49,6 +60,7 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             font-size: 0.8rem;
             text-align: center;
+            overflow: hidden;
         }
 
         nav ul {
@@ -77,10 +89,10 @@
             font-size: 1.1rem;
         }
 
-        /* تنسيق القسم الرئيسي (النص والصورة) */
+        /* القسم الرئيسي (الصورة والنص الأول) */
         .hero {
             display: flex;
-            height: calc(100vh - 90px);
+            min-height: calc(100vh - 90px);
             position: relative;
         }
 
@@ -113,7 +125,6 @@
         .hero-image-container {
             flex: 1.2;
             position: relative;
-            /* عمل تأثير القوس للصورة لتشبه التصميم */
             border-top-right-radius: 300px;
             border-bottom-right-radius: 100px;
             overflow: hidden;
@@ -126,15 +137,43 @@
             object-fit: cover;
         }
 
-        /* أيقونات التواصل الاجتماعي */
+        /* تنسيق الأقسام الجديدة (النص الإضافي ومن نحن) */
+        .content-section {
+            background-color: #ffffff;
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .about-us-section {
+            background-color: #fcf3df; /* لون قريب من الشريط الأصفر بس أهدى شوي */
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .section-title {
+            color: var(--main-bg);
+            font-size: 2.8rem;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+
+        .section-text {
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            line-height: 1.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
         .social-icons {
-            position: absolute;
+            position: fixed; /* ثابتة عالشاشة دايما */
             bottom: 30px;
             right: 30px;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            z-index: 10;
+            z-index: 100;
         }
 
         .social-icons i {
@@ -156,32 +195,37 @@
             transform: scale(1.1);
         }
 
-        /* جعل الموقع متجاوب مع شاشات الهواتف */
         @media (max-width: 900px) {
             .hero { flex-direction: column; height: auto; }
             .hero-image-container { border-radius: 0; height: 400px; order: -1; }
-            header { flex-direction: column; gap: 15px; text-align: center; }
+            header { flex-direction: column; gap: 15px; text-align: center; position: static; /* فك التثبيت عالموبايل عشان ما ياخذ مساحة الشاشة */ }
             nav ul { flex-direction: column; gap: 15px; }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-text h2 { font-size: 2.5rem; }
+            .section-title { font-size: 2.2rem; }
+            .section-text { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- الشريط العلوي الثابت -->
     <header>
-        <div class="logo">الشعار<br>هنا</div>
+        <!-- مكان الشعار (تقدر تحط صورة الشعار اللي جهزناه هون) -->
+        <div class="logo">الشعار</div>
         <nav>
             <ul>
-                <li><a href="#">الصفحة الرئيسية</a></li>
-                <li><a href="#">من نحن</a></li>
+                <li><a href="#home">الصفحة الرئيسية</a></li>
+                <!-- الرابط هذا بينزلك مباشرة لقسم من نحن -->
+                <li><a href="#about">من نحن</a></li>
                 <li><a href="#">تواصل معنا</a></li>
             </ul>
         </nav>
         <div class="slogan">- أنت أمل العالم -</div>
     </header>
 
-    <main class="hero">
+    <!-- القسم الأساسي (اللي فيه الصورة) -->
+    <main class="hero" id="home">
         <div class="hero-text">
             <h1>اليوم العالمي للضمير</h1>
             <h2>مساهمة بسيطة<br>تصنع<br>فرقا في حياة <span class="highlight">شخص</span></h2>
@@ -190,12 +234,29 @@
         <div class="hero-image-container">
             <img src="https://images.unsplash.com/photo-1593113563332-61406e2ceb0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="أشخاص يوزعون الطعام">
         </div>
-
-        <div class="social-icons">
-            <i class="fas fa-phone"></i>
-            <i class="fab fa-facebook-f"></i>
-        </div>
     </main>
+
+    <!-- أي نص إضافي تحت الصورة -->
+    <section class="content-section">
+        <h3 class="section-title">رسالتنا</h3>
+        <p class="section-text">
+            نؤمن بأن الضمير الحي هو الأساس لبناء مجتمعات مترابطة تسودها قيم العدالة والسلام. من خلال المبادرات البسيطة والأفعال الصادقة، يمكننا أن نصنع تغييراً حقيقياً يلامس حياة الكثيرين ويترك أثراً إيجابياً يدوم للأجيال القادمة.
+        </p>
+    </section>
+
+    <!-- قسم "من نحن" -->
+    <section class="about-us-section" id="about">
+        <h3 class="section-title">من نحن</h3>
+        <p class="section-text">
+            نحن مجموعة من المتطوعين والمهتمين بالعمل الإنساني والمجتمعي. تجمعنا رؤية مشتركة تهدف إلى نشر ثقافة التسامح والمحبة، وتقديم يد العون لمن يحتاجها. نعمل جنباً إلى جنب مع أفراد المجتمع لتعزيز روح المبادرة والمسؤولية المجتمعية، مؤمنين بأن التعاون والعمل الجماعي هما السبيل الأفضل لبناء غدٍ مشرق للجميع.
+        </p>
+    </section>
+
+    <!-- أيقونات التواصل الاجتماعي -->
+    <div class="social-icons">
+        <i class="fas fa-phone"></i>
+        <i class="fab fa-facebook-f"></i>
+    </div>
 
 </body>
 </html>
