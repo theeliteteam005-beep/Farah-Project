@@ -21,11 +21,10 @@
             margin: 0;
             padding: 0;
             font-family: 'Tajawal', sans-serif;
-            background-color: #ffffff; /* لون أبيض أساسي بدل الشفاف */
+            background-color: #ffffff;
             overflow-x: hidden;
         }
 
-        /* الشريط الأصفر (مكان الشعار حسب المربع الأحمر) */
         header {
             background-color: var(--header-bg);
             display: flex;
@@ -80,23 +79,21 @@
             font-size: 1.1rem;
         }
 
-        /* 
-         القسم الرئيسي: حصر الصورة لتكون فقط داخل حدود الخطوط الخضراء التي رسمتها
-        */
+        /* القسم الرئيسي للصورة */
         .hero {
             position: relative;
             display: flex;
-            justify-content: flex-start; /* إبقاء النص على اليمين */
+            justify-content: flex-start; 
             align-items: center;
             min-height: calc(100vh - 90px);
             overflow: hidden;
-            /* الصورة هنا محصورة في هذا القسم فقط */
+            /* الصورة الخلفية محصورة هنا */
             background-image: url('WhatsApp_Image_2026-05-12_at_9.39.51_PM.jpeg');
             background-size: cover;
             background-position: left center;
         }
 
-        /* الكيرف: مطابق تماماً للرسمة الحمراء */
+        /* كيرف الـ SVG (ممتد على الشاشة بالكامل ليطبق الشكل) */
         .curve-overlay {
             position: absolute;
             top: 0;
@@ -109,7 +106,7 @@
         .hero-text {
             position: relative;
             z-index: 2;
-            width: 45%; /* تحديد مساحة النص عشان ما يطلع برا الأحمر */
+            width: 45%; 
             padding-right: 5%;
             color: var(--text-on-red);
         }
@@ -128,7 +125,6 @@
 
         .highlight { color: var(--highlight); }
 
-        /* أيقونات التواصل */
         .social-icons {
             position: absolute;
             bottom: 30px;
@@ -156,9 +152,7 @@
 
         .social-icons i:hover { transform: scale(1.1); }
 
-        /* 
-         تم إرجاع خلفيات الأقسام السفلية للونها الطبيعي (لأن الصورة لم تعد ممتدة للأسفل)
-        */
+        /* الأقسام السفلية باللون الأبيض والأوف وايت */
         .content-section, .contact-section {
             padding: 80px 40px;
             text-align: center;
@@ -264,17 +258,18 @@
         <div class="slogan">- أنت أمل العالم -</div>
     </header>
 
-    <!-- القسم الرئيسي: الخلفية موجودة هنا فقط لتطابق الحدود الخضراء -->
     <main class="hero" id="home">
         
-        <!-- الكيرف المعدل ليطابق رسمتك باللون الأحمر بدقة -->
+        <!-- الكيرف الجديد اللي بيشكل حرف (J) أو (L معكوس) -->
         <svg class="curve-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <!-- الظل الفاتح -->
-            <path d="M100,0 L35,0 C10,35 15,70 35,100 L100,100 Z" fill="#f4867b"/>
-            <!-- الأحمر الأساسي -->
-            <path d="M100,0 L45,0 C20,35 25,70 45,100 L100,100 Z" fill="#ea5c52"/>
-            <!-- الدائرة الغامقة لأيقونات التواصل -->
-            <ellipse cx="100" cy="100" rx="15" ry="25" fill="#cf443a"/>
+            <!-- الظل الفاتح (ينزل مستقيم ثم يلف لليسار للآخر) -->
+            <path d="M100,0 L40,0 C40,75 20,100 0,100 L100,100 Z" fill="#f4867b"/>
+            
+            <!-- الأحمر الأساسي (شكل L المعكوس المطلوب) -->
+            <path d="M100,0 L50,0 C50,80 30,100 0,100 L100,100 Z" fill="#ea5c52"/>
+            
+            <!-- الدائرة الغامقة لأيقونات التواصل في الزاوية -->
+            <circle cx="100" cy="100" r="22" fill="#cf443a"/>
         </svg>
 
         <div class="hero-text">
