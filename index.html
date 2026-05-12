@@ -6,53 +6,46 @@
     <title>اليوم العالمي للضمير</title>
     <!-- استدعاء خط عربي -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
-    <!-- استدعاء مكتبة الأيقونات (FontAwesome v6) -->
+    <!-- استدعاء مكتبة الأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --header-bg: #f8dfa8; /* الشريط الأصفر */
-            --main-text-color: #633615; /* لون النص البني الغامق */
-            --highlight: #f9d774; /* لون التمييز الأصفر الفاتح */
-            --text-on-red: #ffffff; /* لون النص الأبيض فوق الأحمر */
-            --warm-bg-tint: rgba(252, 243, 223, 0.7); /* لون قسم "من نحن" شبه الشفاف */
+            --header-bg: #f8dfa8;
+            --main-text-color: #633615;
+            --highlight: #f9d774;
+            --text-on-red: #ffffff;
+            --warm-bg-tint: rgba(252, 243, 223, 0.8);
         }
 
-        /* تفعيل النزول السلس عند الضغط على الروابط */
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Tajawal', sans-serif;
-            background-color: transparent; /* الجسم شفاف لضمان ظهور الخلفية */
+            background-color: transparent;
             overflow-x: hidden;
-            position: relative; /* مهم لموقع الخلفية الثابتة */
+            position: relative;
         }
 
-        /* 
-         الخطوة الأولى: تنسيق الخلفية الثابتة والكاملة
-        */
+        /* الخلفية الثابتة */
         #background-fixed {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -100; /* خلف كل النصوص */
+            z-index: -100;
             background-image: url('WhatsApp_Image_2026-05-12_at_9.39.51_PM.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            
-            /* الشفافية الأولية 1 (غير شفاف) */
             opacity: 1; 
-            will-change: opacity; /* تحسين أداء الحركة */
+            will-change: opacity;
         }
 
-        /* الشريط الأصفر الثابت */
+        /* الشريط الأصفر */
         header {
             background-color: var(--header-bg);
             display: flex;
@@ -73,12 +66,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: bold;
-            color: #ea5c52;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            font-size: 0.8rem;
-            text-align: center;
             overflow: hidden;
+        }
+
+        /* تعديل الشعار ليناسب الدائرة */
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         nav ul {
@@ -97,9 +93,7 @@
             transition: color 0.3s ease;
         }
 
-        nav a:hover {
-            color: #ea5c52;
-        }
+        nav a:hover { color: #ea5c52; }
 
         .slogan {
             color: var(--main-text-color);
@@ -108,28 +102,33 @@
         }
 
         /* 
-         تعديل القسم الرئيسي: إزالة الصورة القديمة ليصبح النص فوق الخلفية الجديدة
+         القسم الرئيسي الذي يحتوي على الكيرف
         */
         .hero {
+            position: relative; /* مهم جداً عشان الكيرف يثبت جواته */
             display: flex;
-            justify-content: center;
+            justify-content: flex-start; /* وضع النص على اليمين */
             align-items: center;
             min-height: calc(100vh - 90px);
-            text-align: center;
-            
-            /* إزالة الصورة القديمة */
-            background-image: none; 
-            
-            /* لون خلفية شفاف لضمان وضوح النص الأبيض فوق الخلفيةBusy */
-            background-color: rgba(234, 92, 82, 0.2); 
-            
-            color: var(--text-on-red);
+            overflow: hidden; /* لمنع خروج الكيرف عن الإطار */
+        }
+
+        /* كود الكيرف (المنحنى الأحمر) */
+        .curve-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* فوق الخلفية وتحت النص */
         }
 
         .hero-text {
-            max-width: 900px;
-            padding: 40px 60px;
-            z-index: 2;
+            position: relative;
+            z-index: 2; /* فوق الكيرف */
+            max-width: 700px;
+            padding: 40px 8%;
+            color: var(--text-on-red);
         }
 
         .hero-text h1 {
@@ -144,27 +143,45 @@
             margin: 0;
         }
 
-        .highlight {
-            color: var(--highlight);
+        .highlight { color: var(--highlight); }
+
+        /* أيقونات التواصل الاجتماعي داخل الدائرة الغامقة */
+        .social-icons {
+            position: absolute; /* ربطها بالقسم الأول وليس الشاشة لتناسب الكيرف */
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10;
         }
 
-        /* 
-         تنسيق أقسام النص لتصبح شفافة فوق الخلفية
-        */
+        .social-icons i {
+            background-color: white;
+            color: #ea5c52;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons i:hover { transform: scale(1.1); }
+
+        /* تنسيق باقي الأقسام */
         .content-section, .about-us-section, .contact-section {
             padding: 80px 40px;
             text-align: center;
-            
-            /* خلفية شبه شفافة جداً لضمان وضوح النص البني فوق الخلفيةBusy */
-            background-color: rgba(255, 255, 255, 0.4); 
-            
-            backdrop-filter: blur(2px); /* تأثير ضبابي خفيف خلف النص للمسة احترافية */
+            background-color: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(5px); 
         }
 
-        /* تخصيص قسم "من نحن" بلون أهدى */
-        .about-us-section {
-            background-color: var(--warm-bg-tint);
-        }
+        .about-us-section { background-color: var(--warm-bg-tint); }
 
         .section-title {
             color: #ea5c52;
@@ -182,7 +199,6 @@
             margin: 0 auto;
         }
 
-        /* تنسيق قسم تواصل معنا */
         .contact-container {
             display: flex;
             justify-content: center;
@@ -207,10 +223,7 @@
             color: var(--main-text-color);
         }
 
-        .contact-item i {
-            color: #ea5c52;
-            font-size: 1.5rem;
-        }
+        .contact-item i { color: #ea5c52; font-size: 1.5rem; }
 
         .contact-form-design h4 {
             color: #ea5c52;
@@ -219,80 +232,20 @@
             margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--main-text-color);
-        }
-
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--main-text-color); }
         .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 1rem;
-            color: var(--main-text-color);
-            box-sizing: border-box; 
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Tajawal', sans-serif; font-size: 1rem; color: var(--main-text-color); box-sizing: border-box; 
         }
-
-        .form-group textarea {
-            resize: vertical;
-        }
+        .form-group textarea { resize: vertical; }
 
         .submit-btn {
-            background-color: #ea5c52;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            background-color: #ea5c52; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background-color 0.3s;
         }
-
-        .submit-btn:hover {
-            background-color: #d1463e;
-        }
-
-        /* أيقونات التواصل الاجتماعي الثابتة */
-        .social-icons {
-            position: fixed; 
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 100;
-        }
-
-        .social-icons i {
-            background-color: white;
-            color: #ea5c52;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .social-icons i:hover {
-            transform: scale(1.1);
-        }
+        .submit-btn:hover { background-color: #d1463e; }
 
         @media (max-width: 900px) {
-            header { flex-direction: column; gap: 15px; text-align: center; position: static; /* فك التثبيت عالموبايل */ }
+            header { flex-direction: column; gap: 15px; text-align: center; position: static; }
             nav ul { flex-direction: column; gap: 15px; }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-text h2 { font-size: 2.5rem; }
@@ -303,25 +256,18 @@
             .contact-item { justify-content: center; }
             .submit-btn { width: 100%; }
         }
-             .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
     </style>
 </head>
 <body>
 
-    <!-- 
-     الخطوة الثانية: عنصر الخلفية الثابتة والكاملة
-    -->
+    <!-- الخلفية الثابتة -->
     <div id="background-fixed"></div>
 
-    <!-- الشريط العلوي الثابت -->
     <header>
         <div class="logo">
-       <img src="logo.png" alt="شعار يوم الضمير">
-   </div>
+            <!-- تأكد من اسم صورة الشعار لديك -->
+            <img src="logo.png" alt="الشعار">
+        </div>
         <nav>
             <ul>
                 <li><a href="#home">الصفحة الرئيسية</a></li>
@@ -332,17 +278,31 @@
         <div class="slogan">- أنت أمل العالم -</div>
     </header>
 
-    <!-- 
-     الخطوة الثالثة: القسم الرئيسي (بدون صورة قديمة ليطفو النص فوق الخلفية)
-    -->
+    <!-- القسم الرئيسي مع الكيرف -->
     <main class="hero" id="home">
+        
+        <!-- الكيرف المرسوم بالـ SVG -->
+        <svg class="curve-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <!-- الطبقة الخلفية (الظل الفاتح) -->
+            <path d="M100,0 L40,0 C40,0 35,55 10,85 C5,95 0,100 0,100 L100,100 Z" fill="#f4867b"/>
+            <!-- الطبقة الأساسية (الأحمر) -->
+            <path d="M100,0 L50,0 C50,0 45,50 15,85 C5,95 0,100 0,100 L100,100 Z" fill="#ea5c52"/>
+            <!-- الدائرة الغامقة أسفل اليمين لأيقونات التواصل -->
+            <circle cx="100" cy="100" r="25" fill="#cf443a"/>
+        </svg>
+
         <div class="hero-text">
             <h1>اليوم العالمي للضمير</h1>
             <h2>مساهمة بسيطة<br>تصنع<br>فرقا في حياة <span class="highlight">شخص</span></h2>
         </div>
+
+        <!-- أيقونات التواصل الاجتماعي -->
+        <div class="social-icons">
+            <i class="fas fa-phone"></i>
+            <i class="fab fa-facebook-f"></i>
+        </div>
     </main>
 
-    <!-- قسما رسالتنا ومن نحن (شفافة فوق الخلفية) -->
     <section class="content-section">
         <h3 class="section-title">رسالتنا</h3>
         <p class="section-text">
@@ -357,7 +317,6 @@
         </p>
     </section>
 
-    <!-- قسم "تواصل معنا" (شفافة فوق الخلفية) -->
     <section class="contact-section" id="contact">
         <h3 class="section-title">تواصل معنا</h3>
         <p class="section-text">
@@ -365,7 +324,6 @@
         </p>
         
         <div class="contact-container">
-            <!-- تفاصيل الاتصال -->
             <div class="contact-details">
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
@@ -381,7 +339,6 @@
                 </div>
             </div>
 
-            <!-- نموذج رسالة -->
             <div class="contact-form-design">
                 <h4>أو أرسل لنا رسالة</h4>
                 <div class="form-group">
@@ -401,30 +358,13 @@
         </div>
     </section>
 
-    <!-- أيقونات التواصل الاجتماعي الثابتة -->
-    <div class="social-icons">
-        <i class="fas fa-phone"></i>
-        <i class="fab fa-facebook-f"></i>
-    </div>
-
-    <!-- 
-     الخطوة الرابعة والسر الساحر: JavaScript لتخفية الخلفية عند النزول
-    -->
+    <!-- كود إخفاء الخلفية عند النزول -->
     <script>
-        // الحصول على عنصر الخلفية
         const background = document.getElementById('background-fixed');
-        
-        // ربط دالة النزول بالنوافذ
         window.onscroll = function() {
-            // حساب نسبة النزول (0 إلى 1) بناءً على ارتفاع الصفحة بالكامل
             const totalPageHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercentage = window.scrollY / totalPageHeight;
-            
-            // حساب الشفافية الجديدة: 1 - نسبة النزول
-            // هذا يعني: عند القمة (1)، عند القاع (0)
             const newOpacity = 1 - scrollPercentage;
-            
-            // تطبيق الشفافية الجديدة، مع تحديد حد أدنى (0.3) لضمان ظهور الخلفية
             background.style.opacity = Math.max(0.3, newOpacity); 
         };
     </script>
